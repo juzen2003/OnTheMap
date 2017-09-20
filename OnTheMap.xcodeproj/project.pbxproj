@@ -7,17 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		292CE3EA1F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CE3E91F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift */; };
+		292CE3EC1F70E99700C67A3F /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CE3EB1F70E99700C67A3F /* UdacityClient.swift */; };
+		292CE3EE1F70EA1300C67A3F /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CE3ED1F70EA1300C67A3F /* UdacityConstants.swift */; };
 		29CE6C151F6B3A7C0016521C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE6C141F6B3A7C0016521C /* AppDelegate.swift */; };
-		29CE6C171F6B3A7C0016521C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE6C161F6B3A7C0016521C /* ViewController.swift */; };
+		29CE6C171F6B3A7C0016521C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE6C161F6B3A7C0016521C /* LoginViewController.swift */; };
 		29CE6C1A1F6B3A7C0016521C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CE6C181F6B3A7C0016521C /* Main.storyboard */; };
 		29CE6C1C1F6B3A7C0016521C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29CE6C1B1F6B3A7C0016521C /* Assets.xcassets */; };
 		29CE6C1F1F6B3A7C0016521C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29CE6C1D1F6B3A7C0016521C /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		292CE3E91F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDUIUpdateOnMain.swift; sourceTree = "<group>"; };
+		292CE3EB1F70E99700C67A3F /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		292CE3ED1F70EA1300C67A3F /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
 		29CE6C111F6B3A7C0016521C /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29CE6C141F6B3A7C0016521C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		29CE6C161F6B3A7C0016521C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		29CE6C161F6B3A7C0016521C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		29CE6C191F6B3A7C0016521C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		29CE6C1B1F6B3A7C0016521C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29CE6C1E1F6B3A7C0016521C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -35,6 +41,64 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		292CE3E21F70700C00C67A3F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				29CE6C161F6B3A7C0016521C /* LoginViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		292CE3E31F70706200C67A3F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				29CE6C181F6B3A7C0016521C /* Main.storyboard */,
+				29CE6C1B1F6B3A7C0016521C /* Assets.xcassets */,
+				29CE6C1D1F6B3A7C0016521C /* LaunchScreen.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		292CE3E41F7070A000C67A3F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				29CE6C201F6B3A7C0016521C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		292CE3E51F7073E700C67A3F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				292CE3E61F7073FA00C67A3F /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		292CE3E61F7073FA00C67A3F /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				292CE3E71F70740B00C67A3F /* Udacity */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		292CE3E71F70740B00C67A3F /* Udacity */ = {
+			isa = PBXGroup;
+			children = (
+				292CE3EB1F70E99700C67A3F /* UdacityClient.swift */,
+				292CE3ED1F70EA1300C67A3F /* UdacityConstants.swift */,
+			);
+			name = Udacity;
+			sourceTree = "<group>";
+		};
+		292CE3E81F7075F600C67A3F /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		29CE6C081F6B3A7C0016521C = {
 			isa = PBXGroup;
 			children = (
@@ -55,11 +119,12 @@
 			isa = PBXGroup;
 			children = (
 				29CE6C141F6B3A7C0016521C /* AppDelegate.swift */,
-				29CE6C161F6B3A7C0016521C /* ViewController.swift */,
-				29CE6C181F6B3A7C0016521C /* Main.storyboard */,
-				29CE6C1B1F6B3A7C0016521C /* Assets.xcassets */,
-				29CE6C1D1F6B3A7C0016521C /* LaunchScreen.storyboard */,
-				29CE6C201F6B3A7C0016521C /* Info.plist */,
+				292CE3E91F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift */,
+				292CE3E51F7073E700C67A3F /* Model */,
+				292CE3E81F7075F600C67A3F /* View */,
+				292CE3E21F70700C00C67A3F /* Controller */,
+				292CE3E31F70706200C67A3F /* Assets */,
+				292CE3E41F7070A000C67A3F /* Supporting Files */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -96,6 +161,7 @@
 				TargetAttributes = {
 					29CE6C101F6B3A7C0016521C = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 4P6C7Q8A3P;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -136,7 +202,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29CE6C171F6B3A7C0016521C /* ViewController.swift in Sources */,
+				292CE3EC1F70E99700C67A3F /* UdacityClient.swift in Sources */,
+				292CE3EE1F70EA1300C67A3F /* UdacityConstants.swift in Sources */,
+				29CE6C171F6B3A7C0016521C /* LoginViewController.swift in Sources */,
+				292CE3EA1F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift in Sources */,
 				29CE6C151F6B3A7C0016521C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +331,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4P6C7Q8A3P;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujen.OnTheMap;
@@ -274,6 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4P6C7Q8A3P;
 				INFOPLIST_FILE = OnTheMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yujen.OnTheMap;
@@ -301,6 +372,7 @@
 				29CE6C251F6B3A7C0016521C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
