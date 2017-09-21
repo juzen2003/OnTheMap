@@ -27,10 +27,17 @@ extension UdacityClient {
     struct JSONBodyKeys {
         static let Udacity = "udacity"
         static let Username = "username"
-        static let Password = "passowrd"
+        static let Password = "password"
     }
     
     // JSON Response Keys
+    /*
+     Successful response:
+     {"account": {"registered": true, "key": "875908826"}, "session": {"id": "1537507853S4fbc8ae49d6b70087f0beea42a352d79", "expiration": "2017-11-20T05:30:53.761950Z"}}
+     Failed response:
+     {"status": 403, "error": "Account not found or invalid credentials."}
+     {"status": 400, "parameter": "udacity.username", "error": "trails.Error 400: Missing parameter 'username'"}
+     */
     struct JSONResponseKeys {
         static let Account = "account"
         static let Registered = "registered"

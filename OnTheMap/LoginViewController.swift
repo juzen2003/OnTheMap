@@ -11,7 +11,7 @@ import UIKit
 class LoginViewController: UIViewController {
     
     var keyboardOnScreen = false
-    // MARK: Outlets
+    
     @IBOutlet weak var udacityImageView: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -35,12 +35,29 @@ class LoginViewController: UIViewController {
         unsubscribeFromAllNotifications()
     }
 
-
+    private func completeLogin() {
+        debugTextLabel.text = "LOGIN COMPLETE!"
+        print("LOGIN COMPLETE!")
+    }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        userDidTapView(self)
+        let username = self.usernameTextField.text!
+        let password = self.passwordTextField.text!
+        //print("USERNAME: \(username)")
+        //print("PASSWORD: \(password)")
+        UdacityClient.sharedInstance().loginAndGetSessionID(username, password: password) { (success, sessionID, errorString) in
+            performUIUpdatesOnMain {
+                if success {
+                    self.completeLogin()
+                } else {
+                    self.displayError(errorString)
+                }
+            }
+        }
+    }
+    
 }
-
-
-
-
 
 
 // MARK: UITextFieldDelegate
@@ -119,12 +136,20 @@ private extension LoginViewController {
         }
     }
     
+    func displayError(_ errorString: String?) {
+        if let errorString = errorString {
+            debugTextLabel.text = errorString
+        }
+    }
+    
     func configureTextField(_ textField: UITextField, secure: Bool) {
         textField.delegate = self
         textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor.white
         textField.isSecureTextEntry = secure
+        textField.keyboardType = .default
+        textField.autocorrectionType = .no
     }
     
     func configureUI() {
