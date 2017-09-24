@@ -43,7 +43,7 @@ class UdacityClient: NSObject {
             
             // GUARD: Was there an error?
             guard (error == nil) else {
-                sendError("There was an error with the request: \(error!)")
+                sendError(String(describing: error!.localizedDescription))
                 return
             }
             
@@ -85,19 +85,19 @@ extension UdacityClient {
             
             // 3: Send the desired value(s) to completion handler
             guard error == nil else {
-                completionHandlerForSessionID(false, nil, String(describing: error))
+                completionHandlerForSessionID(false, nil, String(describing: error!.localizedDescription))
                 return
             }
             
             if let returnedError = results?[UdacityClient.JSONResponseKeys.ErrorMessage] as? String {
                 
                 // error returned
-                completionHandlerForSessionID(false, nil, "Login failed. " + returnedError)
+                completionHandlerForSessionID(false, nil, returnedError)
             } else {
         
                 // GUARD: did we login successfully and get the session id
                 guard let returnedSession = results?[UdacityClient.JSONResponseKeys.Session] as? [String: AnyObject], let returnedSessionID = returnedSession[UdacityClient.JSONResponseKeys.ID] as? String else {
-                    completionHandlerForSessionID(false, nil, "Login failed. Could not obtain session ID.")
+                    completionHandlerForSessionID(false, nil, "Could not obtain session ID.")
                     return
                 }
                 

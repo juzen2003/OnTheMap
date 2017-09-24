@@ -37,22 +37,30 @@ class LoginViewController: UIViewController {
 
     private func completeLogin() {
         debugTextLabel.text = "LOGIN COMPLETE!"
-        print("LOGIN COMPLETE!")
+        // Go to next view controller 
+        
     }
     
+    
+    // MARK: Login button is pressed
     @IBAction func loginPressed(_ sender: Any) {
         userDidTapView(self)
+        self.debugTextLabel.text = "LOGIN PROCESSING..."
         let username = self.usernameTextField.text!
         let password = self.passwordTextField.text!
-        //print("USERNAME: \(username)")
-        //print("PASSWORD: \(password)")
+
         UdacityClient.sharedInstance().loginAndGetSessionID(username, password: password) { (success, sessionID, errorString) in
             performUIUpdatesOnMain {
                 if success {
                     self.completeLogin()
                 } else {
-                    self.displayError(errorString)
+                    if (self.usernameTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty) {
+                        self.presentAlertView("Username or Password Empty!")
+                    } else {
+                        self.presentAlertView(errorString)
+                    }
                 }
+                self.debugTextLabel.text = ""
             }
         }
     }
@@ -168,5 +176,20 @@ private extension LoginViewController {
     
     func unsubscribeFromAllNotifications() {
         NotificationCenter.default.removeObserver(self)
+    }
+}
+
+
+// MARK: Present alert view when login failed
+extension LoginViewController {
+
+    func presentAlertView(_ alertMessages: String?) {
+        let alertVC = UIAlertController(title: "Login Failed", message: alertMessages!, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        alertVC.addAction(okAction)
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
