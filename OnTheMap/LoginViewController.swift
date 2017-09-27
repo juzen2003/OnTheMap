@@ -12,17 +12,21 @@ class LoginViewController: UIViewController {
     
     var keyboardOnScreen = false
     
+    // MARK: IBOutlet
     @IBOutlet weak var udacityImageView: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var debugTextLabel: UILabel!
+    @IBOutlet weak var signUpLabel: UILabel!
+    @IBOutlet var signUpTapGestureRecognizer: UITapGestureRecognizer!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
+        configLabel()
         
         subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
@@ -59,8 +63,9 @@ class LoginViewController: UIViewController {
                     } else {
                         self.presentAlertView(errorString)
                     }
+                    self.debugTextLabel.text = ""
                 }
-                self.debugTextLabel.text = ""
+                
             }
         }
     }
@@ -80,25 +85,25 @@ extension LoginViewController: UITextFieldDelegate {
     
     
     // Keyboard show & hide
-    func keyboardWillShow(_ notification: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
         if (!keyboardOnScreen) {
             self.view.frame.origin.y -= getKeyboardHeight(notification)
             self.udacityImageView.isHidden = true
         }
     }
     
-    func keyboardDidShow(_ notification: Notification) {
+    @objc func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
     }
     
-    func keyboardWillHide(_ notification: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen {
             self.view.frame.origin.y += getKeyboardHeight(notification)
             self.udacityImageView.isHidden = false
         }
     }
     
-    func keyboardDidHide(_ notification: Notification) {
+    @objc func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
     }
     
@@ -152,7 +157,7 @@ private extension LoginViewController {
     
     func configureTextField(_ textField: UITextField, secure: Bool) {
         textField.delegate = self
-        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder!, attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray])
         textField.borderStyle = .roundedRect
         textField.backgroundColor = UIColor.white
         textField.isSecureTextEntry = secure
@@ -193,3 +198,50 @@ extension LoginViewController {
         self.present(alertVC, animated: true, completion: nil)
     }
 }
+
+
+// MARK: create sign up label to link to Udacity Sign Up page
+extension LoginViewController {
+    
+    // config Sign Up as blue color
+    func configLabel() {
+        signUpLabel.text = "Don't have an account? Sign Up"
+        signUpLabel.sizeToFit()
+        signUpLabel.isUserInteractionEnabled = true
+        let text = signUpLabel.text!
+        let clickableString = NSMutableAttributedString(string: text)
+        let clickableRange = (text as NSString).range(of: "Sign Up")
+        
+        clickableString.addAttribute(.foregroundColor, value: UIColor.blue, range: clickableRange)
+        signUpLabel.attributedText = clickableString
+    }
+    
+    // get the size of dummy label with wanted string
+    func getSizeOfLabel(wantedString: String) -> CGFloat {
+        let dummyLabel = UILabel()
+        dummyLabel.text = wantedString
+        let maxSize = CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT))
+        
+        return dummyLabel.sizeThatFits(maxSize).width
+    }
+    
+    // get location of Sign Up from center of the frame
+    func getLocation() -> (CGFloat, CGFloat) {
+        let p1 = signUpLabel.center.x + (getSizeOfLabel(wantedString: "Don't have an account? Sign Up")/2 - getSizeOfLabel(wantedString: "Sign Up"))
+        let p2 = signUpLabel.center.x + (getSizeOfLabel(wantedString: "Don't have an account? Sign Up")/2)
+        return (p1, p2)
+    }
+    
+    // Tap Sign Up to open url and link to Udacity
+    @IBAction func userDidTapLabel(_ sender: AnyObject) {
+        let gestureLocation = signUpTapGestureRecognizer.location(in: signUpTapGestureRecognizer.view)
+        
+        if gestureLocation.x > getLocation().0 && gestureLocation.x < getLocation().1 {
+            if let url = URL(string: "https://www.udacity.com/account/auth#!/signup") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+    }
+    
+}
+
