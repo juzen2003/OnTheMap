@@ -40,6 +40,7 @@ class LoginViewController: UIViewController {
     }
 
     private func completeLogin() {
+        self.setUIEnabled(true)
         debugTextLabel.text = "LOGIN COMPLETE!"
         // Go to next view controller 
         
@@ -49,23 +50,24 @@ class LoginViewController: UIViewController {
     // MARK: Login button is pressed
     @IBAction func loginPressed(_ sender: Any) {
         userDidTapView(self)
-        self.debugTextLabel.text = "LOGIN PROCESSING..."
+    
         let username = self.usernameTextField.text!
         let password = self.passwordTextField.text!
-
-        UdacityClient.sharedInstance().loginAndGetSessionID(username, password: password) { (success, sessionID, errorString) in
-            performUIUpdatesOnMain {
-                if success {
-                    self.completeLogin()
-                } else {
-                    if (self.usernameTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty) {
-                        self.presentAlertView("Username or Password Empty!")
+        
+        if (self.usernameTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty) {
+            self.presentAlertView("Username or Password Empty!")
+        } else {
+            setUIEnabled(false)
+            self.debugTextLabel.text = "LOGIN IN PROCESS..."
+            UdacityClient.sharedInstance().loginAndGetSessionID(username, password: password) { (success, sessionID, errorString) in
+                performUIUpdatesOnMain {
+                    if success {
+                        self.completeLogin()
                     } else {
                         self.presentAlertView(errorString)
+                        self.setUIEnabled(true)
                     }
-                    self.debugTextLabel.text = ""
                 }
-                
             }
         }
     }
@@ -138,8 +140,9 @@ private extension LoginViewController {
         usernameTextField.isEnabled = enabled
         passwordTextField.isEnabled = enabled
         loginButton.isEnabled = enabled
-        debugTextLabel.text = ""
+        signUpLabel.isEnabled = enabled
         debugTextLabel.isEnabled = enabled
+        debugTextLabel.text = ""
         
         // adjust login button alpha
         if enabled {
@@ -189,7 +192,15 @@ private extension LoginViewController {
 extension LoginViewController {
 
     func presentAlertView(_ alertMessages: String?) {
-        let alertVC = UIAlertController(title: "Login Failed", message: alertMessages!, preferredStyle: .alert)
+        var alertString: String?
+        // add a more detailed description when network has problem
+        if alertMessages!.contains("request timed out") {
+            alertString = "Network connection failed. " + alertMessages!
+        } else {
+            alertString = alertMessages!
+        }
+        
+        let alertVC = UIAlertController(title: "Login Failed", message: alertString!, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
             self.dismiss(animated: true, completion: nil)
         }
@@ -206,7 +217,6 @@ extension LoginViewController {
     // config Sign Up as blue color
     func configLabel() {
         signUpLabel.text = "Don't have an account? Sign Up"
-        signUpLabel.sizeToFit()
         signUpLabel.isUserInteractionEnabled = true
         let text = signUpLabel.text!
         let clickableString = NSMutableAttributedString(string: text)
@@ -227,9 +237,9 @@ extension LoginViewController {
     
     // get location of Sign Up from center of the frame
     func getLocation() -> (CGFloat, CGFloat) {
-        let p1 = signUpLabel.center.x + (getSizeOfLabel(wantedString: "Don't have an account? Sign Up")/2 - getSizeOfLabel(wantedString: "Sign Up"))
-        let p2 = signUpLabel.center.x + (getSizeOfLabel(wantedString: "Don't have an account? Sign Up")/2)
-        return (p1, p2)
+        let point1 = signUpLabel.center.x + (getSizeOfLabel(wantedString: "Don't have an account? Sign Up")/2 - getSizeOfLabel(wantedString: "Sign Up"))
+        let point2 = signUpLabel.center.x + (getSizeOfLabel(wantedString: "Don't have an account? Sign Up")/2)
+        return (point1, point2)
     }
     
     // Tap Sign Up to open url and link to Udacity

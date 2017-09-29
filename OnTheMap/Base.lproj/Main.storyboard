@@ -54,7 +54,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6V-5e-eHT" userLabel="Login Button">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6V-5e-eHT" userLabel="Login Button" customClass="LoginButton" customModule="OnTheMap" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="236" width="343" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="DGL-cz-uHn"/>
