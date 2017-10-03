@@ -42,8 +42,9 @@ class LoginViewController: UIViewController {
     private func completeLogin() {
         self.setUIEnabled(true)
         debugTextLabel.text = "LOGIN COMPLETE!"
-        // Go to next view controller 
-        
+        // Go to next view controller
+        let controller = storyboard!.instantiateViewController(withIdentifier: "OnTheMapNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
     }
     
     
