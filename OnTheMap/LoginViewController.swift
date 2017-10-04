@@ -134,7 +134,6 @@ extension LoginViewController: UITextFieldDelegate {
 
 
 // MARK: Configure UI
-
 private extension LoginViewController {
     
     func setUIEnabled(_ enabled: Bool) {

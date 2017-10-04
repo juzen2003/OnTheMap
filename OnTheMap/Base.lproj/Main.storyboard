@@ -181,7 +181,7 @@
         <!--List-->
         <scene sceneID="pXi-LQ-BLW">
             <objects>
-                <viewController id="afD-ot-5rO" sceneMemberID="viewController">
+                <viewController id="afD-ot-5rO" customClass="StudentInfoListViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hy1-RK-K8K"/>
                         <viewControllerLayoutGuide type="bottom" id="CyN-eU-gkE"/>
@@ -203,6 +203,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="afD-ot-5rO" id="5kJ-24-UNq"/>
+                                    <outlet property="delegate" destination="afD-ot-5rO" id="KkM-uE-dt5"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -214,6 +218,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="List View Icon" id="zrT-Kw-Dom"/>
+                    <connections>
+                        <outlet property="studentInfoTableView" destination="miR-6Z-KzH" id="nxt-FM-Ke8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94l-oA-MNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

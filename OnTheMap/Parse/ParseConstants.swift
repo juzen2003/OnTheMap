@@ -21,12 +21,12 @@ extension ParseClient {
         // URL
         static let ApiScheme = "https"
         static let ApiHost = "parse.udacity.com"
-        static let ApiPath = "/parse/classes"
+        static let ApiPath = "/parse"
     }
     
     // Methods
     struct Methods {
-        static let StudentLocation = "/StudentLocation"
+        static let StudentLocation = "/classes/StudentLocation"
     }
     
     // MARK: Parameter Keys
@@ -42,6 +42,9 @@ extension ParseClient {
     }
     
     // JSON Response Keys
+    /*
+     {"error":"unauthorized"}
+     */
     struct JSONResponseKeys {
         static let Results = "results"
         
@@ -58,6 +61,8 @@ extension ParseClient {
         static let ObjectId = "objectId"
         static let UniqueKey = "uniqueKey"
         static let UpdatedAt = "updatedAt"
+        
+        static let ErrorMessage = "error"
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  UdacityConvenienceMethod.swift
+//  UdacityConvenientMethod.swift
 //  OnTheMap
 //
 //  Created by Yu-Jen Chang on 10/2/17.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UdacityClient {
     

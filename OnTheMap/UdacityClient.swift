@@ -23,6 +23,7 @@ class UdacityClient: NSObject {
     
     // MARK: POST method
     func taskForPOSTMethod(_ method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
         // 1,2,3: Set parameters, build the URL, and config request
         let url = makeURLFromParameters(parameters, withPathExtension: method)
         let request = NSMutableURLRequest(url: url)
