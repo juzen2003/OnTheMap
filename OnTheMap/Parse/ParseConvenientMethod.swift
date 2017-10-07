@@ -14,16 +14,17 @@ extension ParseClient {
     
     // MARK: get multiple students locations
     func getMultipleLocations(_ completionHandlerForGetMultiLocations: @escaping (_ results: [StudentInformation]?, _ errorString: String?) -> Void) {
-        let numberOfInfo = "2"
+        let numberOfInfo = "5"
+        let order = "-updatedAt"
         
         // 1: Specify parameters and method
-        let parameters = [ParseClient.ParameterKeys.Limit: numberOfInfo] as [String: AnyObject]
+        let parameters = [ParseClient.ParameterKeys.Limit: numberOfInfo, ParseClient.ParameterKeys.Order: order] as [String: AnyObject]
         let method = ParseClient.Methods.StudentLocation
         
         // 2: Make the request
         let _ = taskForGETMethod(method, parameters: parameters) { (results, error) in
             
-            // 3: Send the desired value(s) to completion handler
+            // 3: Send the desired values to completionHandlerForGetMultiLocations
             guard error == nil else {
                 completionHandlerForGetMultiLocations(nil, String(describing: error!.localizedDescription))
                 return

@@ -24,7 +24,20 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
+        configureUI()
+        configLabel()
         
+        subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
+        subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
+        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
+        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
+         */
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // configure UI here to avoid user credential left in textfield
         configureUI()
         configLabel()
         
@@ -33,7 +46,7 @@ class LoginViewController: UIViewController {
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
         subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         unsubscribeFromAllNotifications()
@@ -166,11 +179,13 @@ private extension LoginViewController {
         textField.isSecureTextEntry = secure
         textField.keyboardType = .default
         textField.autocorrectionType = .no
+        textField.text = ""
     }
     
     func configureUI() {
         configureTextField(usernameTextField, secure: false)
         configureTextField(passwordTextField, secure: true)
+        debugTextLabel.text = ""
     }
 }
 

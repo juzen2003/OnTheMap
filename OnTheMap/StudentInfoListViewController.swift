@@ -16,6 +16,9 @@ class StudentInfoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // logout button
+        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,6 +38,19 @@ class StudentInfoListViewController: UIViewController {
         }
     }
     
+    
+    // logout by deleting a session id
+    @objc func logout() {
+        UdacityClient.sharedInstance().logOutAndDeleteSession { (success, error) in
+            if success {
+                performUIUpdatesOnMain {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                print(error ?? "Failed to logout!")
+            }
+        }
+    }
     
 }
 

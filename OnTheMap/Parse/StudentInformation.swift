@@ -19,6 +19,7 @@ struct StudentInformation {
     let mediaURL: String?
     let mapString: String?
     let objectId: String?
+    let updatedAt: String?
     
     
     // MARK: Initializer
@@ -30,6 +31,7 @@ struct StudentInformation {
         mediaURL = dictionary[ParseClient.JSONResponseKeys.MediaURL] as? String
         mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as? String
         objectId = dictionary[ParseClient.JSONResponseKeys.ObjectId] as? String
+        updatedAt = dictionary[ParseClient.JSONResponseKeys.UpdatedAt] as? String
     }
     
     

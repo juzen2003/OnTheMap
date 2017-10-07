@@ -22,7 +22,7 @@ extension UdacityClient {
         // 2: Make the request
         let _ = taskForPOSTMethod(method, parameters: parameters, jsonBody: jsonBody) { (results, error) in
             
-            // 3: Send the desired value(s) to completion handler
+            // 3: Send the desired values to completionHandlerForSessionID
             guard error == nil else {
                 completionHandlerForSessionID(false, nil, String(describing: error!.localizedDescription))
                 return
@@ -45,6 +45,36 @@ extension UdacityClient {
                 self.sessionID = returnedSessionID
             }
         }
+    }
+    
+    
+    // MARK: Log out by deleting a session
+    func logOutAndDeleteSession(_ completionHandlerForLogOut: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
+        
+        // 1: Specify parameters and method
+        let parameters = [String: AnyObject]()
+        let method = UdacityClient.Methods.Session
+        
+        // 2: Make the request
+        let _ = taskForDELETEMethod(method, parameters: parameters) { (results, error) in
+            
+            // 3: Send the desired values to completionHandlerForLogOut
+            guard error == nil else {
+                completionHandlerForLogOut(false, String(describing: error!.localizedDescription))
+                return
+            }
+            
+            guard let returnedDeletedSession = results?[UdacityClient.JSONResponseKeys.Session] as? [String: AnyObject], let returnedDeletedID = returnedDeletedSession[UdacityClient.JSONResponseKeys.ID] as? String else {
+                completionHandlerForLogOut(false, "Could not obtain deleted session ID.")
+                return
+            }
+            
+            // successfully delete the session ID
+            completionHandlerForLogOut(true, nil)
+            print("Deleted ID: \(returnedDeletedID)")
+        }
+        
+        
     }
     
 }
