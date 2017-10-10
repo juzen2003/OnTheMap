@@ -20,6 +20,8 @@ struct StudentInformation {
     let mapString: String?
     let objectId: String?
     let updatedAt: String?
+    let createdAt: String?
+    let uniqueKey: String?
     
     
     // MARK: Initializer
@@ -32,6 +34,8 @@ struct StudentInformation {
         mapString = dictionary[ParseClient.JSONResponseKeys.MapString] as? String
         objectId = dictionary[ParseClient.JSONResponseKeys.ObjectId] as? String
         updatedAt = dictionary[ParseClient.JSONResponseKeys.UpdatedAt] as? String
+        createdAt = dictionary[ParseClient.JSONResponseKeys.CreatedAt] as? String
+        uniqueKey = dictionary[ParseClient.JSONResponseKeys.UniqueKey] as? String
     }
     
     

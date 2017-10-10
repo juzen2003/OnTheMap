@@ -59,7 +59,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="DGL-cz-uHn"/>
                                         </constraints>
-                                        <state key="normal" title="Login"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="opd-g4-hb4"/>
                                         </connections>
@@ -77,8 +79,11 @@
                                             <outletCollection property="gestureRecognizers" destination="xzE-0j-RbK" appends="YES" id="LhE-SP-W8Z"/>
                                         </connections>
                                     </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xhz-Jm-wbo">
+                                        <rect key="frame" x="0.0" y="320" width="343" height="20"/>
+                                    </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4B1-85-O9y" userLabel="Debug Text Label">
-                                        <rect key="frame" x="0.0" y="320" width="343" height="274"/>
+                                        <rect key="frame" x="0.0" y="350" width="343" height="244"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -89,7 +94,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="b6u-sb-mN7" secondAttribute="trailing" id="JQF-Md-JaS"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="b6u-sb-mN7" secondAttribute="bottom" constant="18" id="rF9-5q-PY2"/>
@@ -101,6 +106,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="xhz-Jm-wbo" id="6Jw-UD-rDq"/>
                         <outlet property="debugTextLabel" destination="4B1-85-O9y" id="H1d-qp-PGZ"/>
                         <outlet property="loginButton" destination="W6V-5e-eHT" id="062-lK-F8F"/>
                         <outlet property="passwordTextField" destination="5GU-0a-XRo" id="z0B-En-neX"/>
@@ -143,7 +149,7 @@
         <!--Map-->
         <scene sceneID="PpB-nB-6xy">
             <objects>
-                <viewController id="fwO-7G-X9q" sceneMemberID="viewController">
+                <viewController id="fwO-7G-X9q" customClass="StudentInfoMapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZZF-5J-6j4"/>
                         <viewControllerLayoutGuide type="bottom" id="FsA-Qa-Oo1"/>
@@ -151,13 +157,30 @@
                     <view key="view" contentMode="scaleToFill" id="2sK-qC-mZP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Jxp-lv-cIE">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <connections>
+                                    <outlet property="delegate" destination="fwO-7G-X9q" id="rW3-zO-XOv"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Jxp-lv-cIE" firstAttribute="leading" secondItem="2sK-qC-mZP" secondAttribute="leading" id="e7F-0m-WVy"/>
+                            <constraint firstItem="Jxp-lv-cIE" firstAttribute="top" secondItem="ZZF-5J-6j4" secondAttribute="bottom" id="uP7-cg-c3b"/>
+                            <constraint firstItem="FsA-Qa-Oo1" firstAttribute="top" secondItem="Jxp-lv-cIE" secondAttribute="bottom" id="x4a-fz-mC8"/>
+                            <constraint firstAttribute="trailing" secondItem="Jxp-lv-cIE" secondAttribute="trailing" id="yim-Bd-BII"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map View Icon" id="vEx-Wj-SPs"/>
+                    <connections>
+                        <outlet property="mapView" destination="Jxp-lv-cIE" id="t0W-GD-als"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C4g-1s-pfO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2553" y="-301"/>
+            <point key="canvasLocation" x="2552.8000000000002" y="-301.79910044977515"/>
         </scene>
         <!--Student Locations Tab-->
         <scene sceneID="25e-P4-4Bf">
@@ -194,12 +217,28 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentInfoTableViewCell" id="Czf-Sg-AJJ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentInfoTableViewCell" textLabel="Igx-8W-HrX" detailTextLabel="Nu2-tJ-vKv" style="IBUITableViewCellStyleSubtitle" id="Czf-Sg-AJJ">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Czf-Sg-AJJ" id="gni-Tn-KoU">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Igx-8W-HrX">
+                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nu2-tJ-vKv">
+                                                    <rect key="frame" x="15" y="25.5" width="33" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>

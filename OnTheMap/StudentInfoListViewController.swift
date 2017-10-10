@@ -18,7 +18,7 @@ class StudentInfoListViewController: UIViewController {
         super.viewDidLoad()
         
         // logout button
-        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
+        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logout))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,11 +63,15 @@ extension StudentInfoListViewController: UITableViewDelegate, UITableViewDataSou
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         let singleStudentInfo = studentInfo[(indexPath as NSIndexPath).row]
         
-        cell.textLabel?.text = singleStudentInfo.firstName! + " " + singleStudentInfo.lastName!
+        // display empty string if posted info is blank in name & url
+        cell.textLabel?.text = (singleStudentInfo.firstName ?? "") + " " + (singleStudentInfo.lastName ?? "")
+        cell.detailTextLabel?.text = (singleStudentInfo.mediaURL ?? "")
         cell.imageView?.image = UIImage(named: "Pin Icon")
         
         cell.imageView?.contentMode = .scaleAspectFit
         cell.textLabel?.contentMode = .scaleAspectFill
+        cell.detailTextLabel?.contentMode = .scaleAspectFill
+        cell.detailTextLabel?.textColor = UIColor.lightGray
         
         return cell
     }
@@ -84,5 +88,11 @@ extension StudentInfoListViewController: UITableViewDelegate, UITableViewDataSou
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
+    
+    /*
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    */
 }
 

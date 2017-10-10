@@ -21,6 +21,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var signUpLabel: UILabel!
     @IBOutlet var signUpTapGestureRecognizer: UITapGestureRecognizer!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,9 +71,12 @@ class LoginViewController: UIViewController {
         
         if (self.usernameTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty) {
             self.presentAlertView("Username or Password Empty!")
+            
         } else {
+            
             setUIEnabled(false)
             self.debugTextLabel.text = "LOGIN IN PROCESS..."
+            
             UdacityClient.sharedInstance().loginAndGetSessionID(username, password: password) { (success, sessionID, errorString) in
                 performUIUpdatesOnMain {
                     if success {
@@ -160,8 +164,12 @@ private extension LoginViewController {
         // adjust login button alpha
         if enabled {
             loginButton.alpha = 1.0
+            activityIndicator.alpha = 0.0
+            activityIndicator.stopAnimating()
         } else {
             loginButton.alpha = 0.5
+            activityIndicator.alpha = 1.0
+            activityIndicator.startAnimating()
         }
     }
     
@@ -186,6 +194,7 @@ private extension LoginViewController {
         configureTextField(usernameTextField, secure: false)
         configureTextField(passwordTextField, secure: true)
         debugTextLabel.text = ""
+        activityIndicator.alpha = 0.0
     }
 }
 
