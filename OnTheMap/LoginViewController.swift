@@ -20,7 +20,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var debugTextLabel: UILabel!
     @IBOutlet weak var signUpLabel: UILabel!
     @IBOutlet var signUpTapGestureRecognizer: UITapGestureRecognizer!
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -153,6 +152,16 @@ extension LoginViewController: UITextFieldDelegate {
 // MARK: Configure UI
 private extension LoginViewController {
     
+    func activityIndicatorIsOn(_ on: Bool) {
+        if on {
+            activityIndicator.alpha = 1.0
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.alpha = 0.0
+            activityIndicator.stopAnimating()
+        }
+    }
+    
     func setUIEnabled(_ enabled: Bool) {
         usernameTextField.isEnabled = enabled
         passwordTextField.isEnabled = enabled
@@ -164,12 +173,10 @@ private extension LoginViewController {
         // adjust login button alpha
         if enabled {
             loginButton.alpha = 1.0
-            activityIndicator.alpha = 0.0
-            activityIndicator.stopAnimating()
+            activityIndicatorIsOn(false)
         } else {
             loginButton.alpha = 0.5
-            activityIndicator.alpha = 1.0
-            activityIndicator.startAnimating()
+            activityIndicatorIsOn(true)
         }
     }
     

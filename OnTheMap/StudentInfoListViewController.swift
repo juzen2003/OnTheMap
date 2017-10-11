@@ -13,44 +13,41 @@ class StudentInfoListViewController: UIViewController {
     var studentInfo: [StudentInformation] = [StudentInformation]()
     
     @IBOutlet weak var studentInfoTableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.activityIndicatorIsOn(false)
         
-        // logout button
-        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LOGOUT", style: .plain, target: self, action: #selector(logout))
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
+        downloadStudentInfo()
+    }
+    
+    // download student info
+    func downloadStudentInfo() {
+        //self.activityIndicatorIsOn(true)
         
-        // download student info
         ParseClient.sharedInstance().getMultipleLocations { (results, error) in
             if let results = results {
                 self.studentInfo = results
                 performUIUpdatesOnMain {
                     self.studentInfoTableView.reloadData()
+                    //self.activityIndicatorIsOn(false)
                 }
             } else {
-                // when data is not downloaded for table view
-                print(error ?? "empty error")
+                // when data is not downloaded for table view, need to add alert view here
+                //self.activityIndicatorIsOn(false)
+                self.presentAlertView(error, title: "Download Failed")
             }
         }
     }
     
     
-    // logout by deleting a session id
-    @objc func logout() {
-        UdacityClient.sharedInstance().logOutAndDeleteSession { (success, error) in
-            if success {
-                performUIUpdatesOnMain {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            } else {
-                print(error ?? "Failed to logout!")
-            }
-        }
-    }
+    
     
 }
 
@@ -83,16 +80,71 @@ extension StudentInfoListViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let singleStudentInfo = studentInfo[(indexPath as NSIndexPath).row]
         
+        
+        // GURAD: check see if there is any blank URL posted
+        guard let postedUrlString = singleStudentInfo.mediaURL else {
+            self.presentAlertView("URL does not exist!", title: "Blank URL")
+            return
+        }
+        
+        // add https:// if posted url has no scheme
+        var urlString = ""
+        if postedUrlString.contains("https://") || postedUrlString.contains("http://") {
+            urlString = postedUrlString
+        } else {
+            urlString = "https://" + postedUrlString
+        }
+        
         // open the link posted by the student when tapping a cell
-        if let url = URL(string: singleStudentInfo.mediaURL!) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
+                if !success {
+                    self.presentAlertView("Failed to open posted URL in Safari!", title: "URL Error")
+                }
+            })
         }
     }
     
-    /*
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 60
     }
-    */
+    
 }
+
+
+// MARK: config activity indicator
+extension StudentInfoListViewController {
+    
+    func activityIndicatorIsOn(_ on: Bool) {
+        if on {
+            activityIndicator.alpha = 1.0
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.alpha = 0.0
+            activityIndicator.stopAnimating()
+        }
+    }
+}
+
+
+// MARK: Present alert view when failed to download data or failed to open up url in safari
+extension StudentInfoListViewController {
+    
+    func presentAlertView(_ alertMessages: String?, title: String) {
+        var alertString: String?
+        // add a more detailed description when network has problem
+        if alertMessages!.contains("request timed out") {
+            alertString = "Network connection failed. " + alertMessages!
+        } else {
+            alertString = alertMessages!
+        }
+        
+        let alertVC = UIAlertController(title: title, message: alertString!, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alertVC.addAction(okAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+}
+
 

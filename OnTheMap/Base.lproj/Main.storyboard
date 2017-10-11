@@ -164,6 +164,10 @@
                                     <outlet property="delegate" destination="fwO-7G-X9q" id="rW3-zO-XOv"/>
                                 </connections>
                             </mapView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="xc7-AV-87j">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -175,6 +179,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map View Icon" id="vEx-Wj-SPs"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="xc7-AV-87j" id="9dS-yR-inY"/>
                         <outlet property="mapView" destination="Jxp-lv-cIE" id="t0W-GD-als"/>
                     </connections>
                 </viewController>
@@ -221,18 +226,18 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Czf-Sg-AJJ" id="gni-Tn-KoU">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Igx-8W-HrX">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="5" width="33" height="20"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nu2-tJ-vKv">
-                                                    <rect key="frame" x="15" y="25.5" width="33" height="14.5"/>
+                                                    <rect key="frame" x="15" y="25" width="33" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -247,6 +252,10 @@
                                     <outlet property="delegate" destination="afD-ot-5rO" id="KkM-uE-dt5"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="5d1-lH-rjA">
+                                <rect key="frame" x="0.0" y="323" width="375" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -258,6 +267,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="List View Icon" id="zrT-Kw-Dom"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="5d1-lH-rjA" id="fXj-yd-LwO"/>
                         <outlet property="studentInfoTableView" destination="miR-6Z-KzH" id="nxt-FM-Ke8"/>
                     </connections>
                 </viewController>

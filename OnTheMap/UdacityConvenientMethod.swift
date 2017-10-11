@@ -73,8 +73,6 @@ extension UdacityClient {
             completionHandlerForLogOut(true, nil)
             print("Deleted ID: \(returnedDeletedID)")
         }
-        
-        
     }
     
 }

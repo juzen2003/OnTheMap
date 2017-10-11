@@ -7,14 +7,14 @@
 //
 
 import Foundation
-
+import UIKit
 
 extension ParseClient {
     
     
     // MARK: get multiple students locations
     func getMultipleLocations(_ completionHandlerForGetMultiLocations: @escaping (_ results: [StudentInformation]?, _ errorString: String?) -> Void) {
-        let numberOfInfo = "5"
+        let numberOfInfo = "30"
         let order = "-updatedAt"
         
         // 1: Specify parameters and method
