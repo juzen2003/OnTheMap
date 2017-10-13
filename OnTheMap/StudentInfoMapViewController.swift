@@ -19,12 +19,12 @@ class StudentInfoMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.activityIndicatorIsOn(false)
-        
-        // logout button
-        parent!.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
-        
         downloadAndDisplayStudentInfo()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureUI()
     }
     
     
@@ -59,16 +59,17 @@ class StudentInfoMapViewController: UIViewController {
 
     
     // download student info and display on map view
-    func downloadAndDisplayStudentInfo() {
-        
+    @objc func downloadAndDisplayStudentInfo() {
+        self.activityIndicatorIsOn(true)
         ParseClient.sharedInstance().getMultipleLocations { (results, error) in
             if let results = results {
                 let annotations = self.createAnnotationArray(results)
                 performUIUpdatesOnMain {
+                     self.activityIndicatorIsOn(false)
                     self.mapView.addAnnotations(annotations)
                 }
             } else {
-                // when data is not downloaded for table view, need to add alert view here
+                 self.activityIndicatorIsOn(false)
                 self.presentAlertView(error, title: "Download Failed")
             }
         }
@@ -170,14 +171,35 @@ extension StudentInfoMapViewController {
     }
 }
 
-// MARK: config activity indicator
+
+// MARK:
 extension StudentInfoMapViewController {
     
+    func configureUI() {
+        // logout, refresh and add button
+        let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(downloadAndDisplayStudentInfo))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        parent!.navigationItem.leftBarButtonItem = logoutButton
+        parent!.navigationItem.rightBarButtonItems = [addButton, refreshButton]
+        
+        self.activityIndicatorIsOn(false)
+    }
+    
+    func setUIEnabled(_ enable: Bool) {
+        parent!.navigationItem.leftBarButtonItem?.isEnabled = enable
+        parent!.navigationItem.rightBarButtonItems?[0].isEnabled = enable
+        parent!.navigationItem.rightBarButtonItems?[1].isEnabled = enable
+    }
+    
+    // config activity indicator, this is to inform users that logout or refresh is in process when those buttons are tapped 
     func activityIndicatorIsOn(_ on: Bool) {
         if on {
+            setUIEnabled(false)
             activityIndicator.alpha = 1.0
             activityIndicator.startAnimating()
         } else {
+            setUIEnabled(true)
             activityIndicator.alpha = 0.0
             activityIndicator.stopAnimating()
         }

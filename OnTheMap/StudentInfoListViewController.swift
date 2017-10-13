@@ -17,36 +17,47 @@ class StudentInfoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.activityIndicatorIsOn(false)
-        
-        
+        downloadStudentInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        downloadStudentInfo()
+        configureUI()
     }
     
     // download student info
-    func downloadStudentInfo() {
-        //self.activityIndicatorIsOn(true)
-        
+    @objc func downloadStudentInfo() {
+        self.activityIndicatorIsOn(true)
         ParseClient.sharedInstance().getMultipleLocations { (results, error) in
             if let results = results {
                 self.studentInfo = results
                 performUIUpdatesOnMain {
                     self.studentInfoTableView.reloadData()
-                    //self.activityIndicatorIsOn(false)
+                    self.activityIndicatorIsOn(false)
                 }
             } else {
                 // when data is not downloaded for table view, need to add alert view here
-                //self.activityIndicatorIsOn(false)
+                self.activityIndicatorIsOn(false)
                 self.presentAlertView(error, title: "Download Failed")
             }
         }
     }
     
-    
+    // logout by deleting a session id
+    @objc func logout() {
+        self.activityIndicatorIsOn(true)
+        UdacityClient.sharedInstance().logOutAndDeleteSession { (success, error) in
+            if success {
+                performUIUpdatesOnMain {
+                    self.activityIndicatorIsOn(false)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            } else {
+                self.activityIndicatorIsOn(false)
+                self.presentAlertView(error, title: "Logout Failed")
+            }
+        }
+    }
     
     
 }
@@ -94,14 +105,18 @@ extension StudentInfoListViewController: UITableViewDelegate, UITableViewDataSou
         } else {
             urlString = "https://" + postedUrlString
         }
-        
+        //print("POSTED URL: \(postedUrlString)")
+        //print("URLSTRING: \(urlString)")
         // open the link posted by the student when tapping a cell
+        
         if let url = URL(string: urlString) {
             UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
                 if !success {
                     self.presentAlertView("Failed to open posted URL in Safari!", title: "URL Error")
                 }
             })
+        } else {
+            self.presentAlertView("Failed to form URL from posted mediaURL string!", title: "URL Error")
         }
     }
     
@@ -109,21 +124,6 @@ extension StudentInfoListViewController: UITableViewDelegate, UITableViewDataSou
         return 60
     }
     
-}
-
-
-// MARK: config activity indicator
-extension StudentInfoListViewController {
-    
-    func activityIndicatorIsOn(_ on: Bool) {
-        if on {
-            activityIndicator.alpha = 1.0
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.alpha = 0.0
-            activityIndicator.stopAnimating()
-        }
-    }
 }
 
 
@@ -148,3 +148,36 @@ extension StudentInfoListViewController {
 }
 
 
+// MARK: config UI
+extension StudentInfoListViewController {
+    
+    func configureUI() {
+        // logout, refresh and add button
+        let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(downloadStudentInfo))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        parent!.navigationItem.leftBarButtonItem = logoutButton
+        parent!.navigationItem.rightBarButtonItems = [addButton, refreshButton]
+        
+        self.activityIndicatorIsOn(false)
+    }
+    
+    func setUIEnabled(_ enable: Bool) {
+        parent!.navigationItem.leftBarButtonItem?.isEnabled = enable
+        parent!.navigationItem.rightBarButtonItems?[0].isEnabled = enable
+        parent!.navigationItem.rightBarButtonItems?[1].isEnabled = enable
+    }
+    
+    // config activity indicator, this is to inform users that logout or refresh is in process when those buttons are tapped
+    func activityIndicatorIsOn(_ on: Bool) {
+        if on {
+            setUIEnabled(false)
+            activityIndicator.alpha = 1.0
+            activityIndicator.startAnimating()
+        } else {
+            setUIEnabled(true)
+            activityIndicator.alpha = 0.0
+            activityIndicator.stopAnimating()
+        }
+    }
+}
