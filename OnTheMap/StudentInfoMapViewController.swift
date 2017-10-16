@@ -69,8 +69,8 @@ class StudentInfoMapViewController: UIViewController {
                     self.mapView.addAnnotations(annotations)
                 }
             } else {
-                 self.activityIndicatorIsOn(false)
-                self.presentAlertView(error, title: "Download Failed")
+                self.activityIndicatorIsOn(false)
+                presentAlertView(error, title: "Download Failed", targetViewController: self)
             }
         }
     }
@@ -87,7 +87,7 @@ class StudentInfoMapViewController: UIViewController {
                 }
             } else {
                 self.activityIndicatorIsOn(false)
-                self.presentAlertView(error, title: "Logout Failed")
+                presentAlertView(error, title: "Logout Failed", targetViewController: self)
             }
         }
     }
@@ -98,7 +98,7 @@ class StudentInfoMapViewController: UIViewController {
 // MARK: MKMapViewDelegate
 extension StudentInfoMapViewController: MKMapViewDelegate {
     
-    // annotation view with callout accessory view
+    // annotation view
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
         
@@ -109,6 +109,8 @@ extension StudentInfoMapViewController: MKMapViewDelegate {
             pinView?.canShowCallout = true
             pinView?.pinTintColor = UIColor.red
             pinView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            
+
         } else {
             pinView!.annotation = annotation
         }
@@ -116,14 +118,13 @@ extension StudentInfoMapViewController: MKMapViewDelegate {
         return pinView
     }
     
-    
     // when a pin is tapped
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            
+            print("Annotation view is tapped")
             // GURAD: check see if there is any blank URL posted
             guard let postedUrlString = view.annotation?.subtitle! else {
-                self.presentAlertView("URL does not exist!", title: "Blank URL")
+                presentAlertView("URL does not exist!", title: "Blank URL", targetViewController: self)
                 return
             }
             
@@ -139,36 +140,18 @@ extension StudentInfoMapViewController: MKMapViewDelegate {
             if let url = URL(string: urlString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
                     if !success {
-                        self.presentAlertView("Failed to open posted URL in Safari!", title: "URL Error")
+                        presentAlertView("Failed to open posted URL in Safari!", title: "URL Error", targetViewController: self)
                     }
                 })
+            } else {
+                presentAlertView("Failed to form URL from posted mediaURL string!", title: "URL Error", targetViewController: self)
             }
             
         }
-    }
+     }
+ 
     
     
-}
-
-
-// MARK: Present alert view when failed to download data or failed to open up url in safari
-extension StudentInfoMapViewController {
-    
-    func presentAlertView(_ alertMessages: String?, title: String) {
-        var alertString: String?
-        // add a more detailed description when network has problem
-        if alertMessages!.contains("request timed out") {
-            alertString = "Network connection failed. " + alertMessages!
-        } else {
-            alertString = alertMessages!
-        }
-        
-        let alertVC = UIAlertController(title: title, message: alertString!, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        
-        alertVC.addAction(okAction)
-        self.present(alertVC, animated: true, completion: nil)
-    }
 }
 
 
@@ -177,29 +160,18 @@ extension StudentInfoMapViewController {
     
     func configureUI() {
         // logout, refresh and add button
-        let logoutButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
-        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(downloadAndDisplayStudentInfo))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-        parent!.navigationItem.leftBarButtonItem = logoutButton
-        parent!.navigationItem.rightBarButtonItems = [addButton, refreshButton]
-        
+        addNavigationBarButton(self, logoutAction: #selector(logout), refreshAction: #selector(downloadAndDisplayStudentInfo), addAction: nil)
         self.activityIndicatorIsOn(false)
-    }
-    
-    func setUIEnabled(_ enable: Bool) {
-        parent!.navigationItem.leftBarButtonItem?.isEnabled = enable
-        parent!.navigationItem.rightBarButtonItems?[0].isEnabled = enable
-        parent!.navigationItem.rightBarButtonItems?[1].isEnabled = enable
     }
     
     // config activity indicator, this is to inform users that logout or refresh is in process when those buttons are tapped 
     func activityIndicatorIsOn(_ on: Bool) {
         if on {
-            setUIEnabled(false)
+            setUIEnabled(false, targetViewController: self)
             activityIndicator.alpha = 1.0
             activityIndicator.startAnimating()
         } else {
-            setUIEnabled(true)
+            setUIEnabled(true, targetViewController: self)
             activityIndicator.alpha = 0.0
             activityIndicator.stopAnimating()
         }

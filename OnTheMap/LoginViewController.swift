@@ -69,7 +69,7 @@ class LoginViewController: UIViewController {
         let password = self.passwordTextField.text!
         
         if (self.usernameTextField.text!.isEmpty || self.passwordTextField.text!.isEmpty) {
-            self.presentAlertView("Username or Password Empty!")
+            presentAlertView("Username or Password Empty!", title: "Login Failed", targetViewController: self)
             
         } else {
             
@@ -81,7 +81,7 @@ class LoginViewController: UIViewController {
                     if success {
                         self.completeLogin()
                     } else {
-                        self.presentAlertView(errorString)
+                        presentAlertView(errorString, title: "Login Failed", targetViewController: self)
                         self.setUIEnabled(true)
                     }
                 }
@@ -215,29 +215,6 @@ private extension LoginViewController {
     
     func unsubscribeFromAllNotifications() {
         NotificationCenter.default.removeObserver(self)
-    }
-}
-
-
-// MARK: Present alert view when login failed
-extension LoginViewController {
-
-    func presentAlertView(_ alertMessages: String?) {
-        var alertString: String?
-        // add a more detailed description when network has problem
-        if alertMessages!.contains("request timed out") {
-            alertString = "Network connection failed. " + alertMessages!
-        } else {
-            alertString = alertMessages!
-        }
-        
-        let alertVC = UIAlertController(title: "Login Failed", message: alertString!, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        
-        alertVC.addAction(okAction)
-        self.present(alertVC, animated: true, completion: nil)
     }
 }
 

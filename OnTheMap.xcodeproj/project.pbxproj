@@ -10,6 +10,7 @@
 		292CE3EA1F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CE3E91F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift */; };
 		292CE3EC1F70E99700C67A3F /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CE3EB1F70E99700C67A3F /* UdacityClient.swift */; };
 		292CE3EE1F70EA1300C67A3F /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292CE3ED1F70EA1300C67A3F /* UdacityConstants.swift */; };
+		29571FD71F931664009291AA /* CommonUseMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29571FD61F931664009291AA /* CommonUseMethods.swift */; };
 		299E39D71F7E211E0066DDD1 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E39D61F7E211E0066DDD1 /* LoginButton.swift */; };
 		299E39DB1F8316360066DDD1 /* StudentInfoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E39DA1F8316360066DDD1 /* StudentInfoListViewController.swift */; };
 		299E39DD1F833F450066DDD1 /* UdacityConvenientMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299E39DC1F833F450066DDD1 /* UdacityConvenientMethod.swift */; };
@@ -29,6 +30,7 @@
 		292CE3E91F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDUIUpdateOnMain.swift; sourceTree = "<group>"; };
 		292CE3EB1F70E99700C67A3F /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		292CE3ED1F70EA1300C67A3F /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		29571FD61F931664009291AA /* CommonUseMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUseMethods.swift; sourceTree = "<group>"; };
 		299E39D61F7E211E0066DDD1 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		299E39DA1F8316360066DDD1 /* StudentInfoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInfoListViewController.swift; sourceTree = "<group>"; };
 		299E39DC1F833F450066DDD1 /* UdacityConvenientMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityConvenientMethod.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				29CE6C141F6B3A7C0016521C /* AppDelegate.swift */,
 				292CE3E91F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift */,
+				29571FD61F931664009291AA /* CommonUseMethods.swift */,
 				292CE3E51F7073E700C67A3F /* Model */,
 				292CE3E81F7075F600C67A3F /* View */,
 				292CE3E21F70700C00C67A3F /* Controller */,
@@ -240,6 +243,7 @@
 				299E39DD1F833F450066DDD1 /* UdacityConvenientMethod.swift in Sources */,
 				299E39E21F834BFC0066DDD1 /* ParseConstants.swift in Sources */,
 				292CE3EE1F70EA1300C67A3F /* UdacityConstants.swift in Sources */,
+				29571FD71F931664009291AA /* CommonUseMethods.swift in Sources */,
 				299E39E81F8CB1FA0066DDD1 /* StudentInfoMapViewController.swift in Sources */,
 				29CE6C171F6B3A7C0016521C /* LoginViewController.swift in Sources */,
 				292CE3EA1F70E3BF00C67A3F /* GCDUIUpdateOnMain.swift in Sources */,
