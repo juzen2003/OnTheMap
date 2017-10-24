@@ -47,3 +47,13 @@ func setUIEnabled(_ enable: Bool, targetViewController: UIViewController) {
     targetViewController.parent!.navigationItem.rightBarButtonItems?[0].isEnabled = enable
     targetViewController.parent!.navigationItem.rightBarButtonItems?[1].isEnabled = enable
 }
+
+
+// MARK: subscribe/unsubscribe notifications to inform view controller
+func subscribeToNotification(_ notification: NSNotification.Name, selector: Selector, observer: Any) {
+    NotificationCenter.default.addObserver(observer, selector: selector, name: notification, object: nil)
+}
+
+func unsubscribeFromAllNotifications(_ observer: Any) {
+    NotificationCenter.default.removeObserver(observer)
+}

@@ -1,5 +1,5 @@
 //
-//  LoginButton.swift
+//  CustomizedButton.swift
 //  OnTheMap
 //
 //  Created by Yu-Jen Chang on 9/28/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginButton: UIButton {
+class CustomizedButton: UIButton {
     
     //let darkerOrange = UIColor(red: 0.961, green: 0.368, blue: 0.0, alpha:1.0)
     //let lighterOrange = UIColor(red: 0.985, green:0.490, blue:0.0, alpha: 1.0)
@@ -37,7 +37,7 @@ class LoginButton: UIButton {
         backingColor = darkerBlue
         backgroundColor = darkerBlue
         setTitleColor(.white, for: UIControlState())
-        setTitle("Login", for: .normal)
+        //setTitle("Login", for: .normal)
     }
     
     

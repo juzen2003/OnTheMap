@@ -59,6 +59,11 @@ class StudentInfoListViewController: UIViewController {
         }
     }
     
+    // go to AddLocationViewController
+    @objc func addLocation() {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
+    }
     
 }
 
@@ -132,7 +137,7 @@ extension StudentInfoListViewController {
     
     func configureUI() {
         // logout, refresh and add button
-        addNavigationBarButton(self, logoutAction: #selector(logout), refreshAction: #selector(downloadStudentInfo), addAction: nil)
+        addNavigationBarButton(self, logoutAction: #selector(logout), refreshAction: #selector(downloadStudentInfo), addAction: #selector(addLocation))
         self.activityIndicatorIsOn(false)
     }
     

@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
         subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
         subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
-         */
+        */
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,15 +41,15 @@ class LoginViewController: UIViewController {
         configureUI()
         configLabel()
         
-        subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow))
-        subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide))
-        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow))
-        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide))
+        subscribeToNotification(.UIKeyboardWillShow, selector: #selector(keyboardWillShow), observer: self)
+        subscribeToNotification(.UIKeyboardWillHide, selector: #selector(keyboardWillHide), observer: self)
+        subscribeToNotification(.UIKeyboardDidShow, selector: #selector(keyboardDidShow), observer: self)
+        subscribeToNotification(.UIKeyboardDidHide, selector: #selector(keyboardDidHide), observer: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromAllNotifications()
+        unsubscribeFromAllNotifications(self)
     }
 
     private func completeLogin() {
@@ -106,24 +106,39 @@ extension LoginViewController: UITextFieldDelegate {
     // Keyboard show & hide
     @objc func keyboardWillShow(_ notification: Notification) {
         if (!keyboardOnScreen) {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            //print("KEYBOARd WILL SHOW")
+            //print("Orginal point: \(self.view.frame.origin.y)")
+            //print("KEYBOARD HEIGHT: \(getKeyboardHeight(notification))")
+            //print("UDACITY IMAGE HEIGHT: \(self.udacityImageView.frame.height)")
+            //print("USERNAME TEXT POINT MAX Y: \(self.usernameTextField.frame.maxY)")
+            //print("USERNAME TEXT POINT MIN Y: \(self.usernameTextField.frame.minY)")
             self.udacityImageView.isHidden = true
+            self.view.frame.origin.y = 0.0
+            //self.view.frame.origin.y -= getKeyboardHeight(notification)
+            //print("Current point: \(self.view.frame.origin.y)")
         }
     }
     
     @objc func keyboardDidShow(_ notification: Notification) {
         keyboardOnScreen = true
+        //print("KEYBOARD DID SHOW")
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
         if keyboardOnScreen {
-            self.view.frame.origin.y += getKeyboardHeight(notification)
+            //print("KEYBOARD WILL HIDE")
+            //print("Orginal point: \(self.view.frame.origin.y)")
+            //print("KEYBOARD HEIGHT: \(getKeyboardHeight(notification))")
             self.udacityImageView.isHidden = false
+            self.view.frame.origin.y = 0.0
+            //self.view.frame.origin.y += getKeyboardHeight(notification)
+            //print("Current point: \(self.view.frame.origin.y)")
         }
     }
     
     @objc func keyboardDidHide(_ notification: Notification) {
         keyboardOnScreen = false
+        //print("KEYBOARD DID HIDE")
     }
     
     private func getKeyboardHeight(_ notification: Notification) -> CGFloat {
@@ -202,10 +217,13 @@ private extension LoginViewController {
         configureTextField(passwordTextField, secure: true)
         debugTextLabel.text = ""
         activityIndicator.alpha = 0.0
+        keyboardOnScreen = false
+        loginButton.setTitle("Login", for: .normal)
     }
 }
 
 
+/*
 // MARK: Notifications
 private extension LoginViewController {
     
@@ -217,7 +235,7 @@ private extension LoginViewController {
         NotificationCenter.default.removeObserver(self)
     }
 }
-
+*/
 
 // MARK: create sign up label to link to Udacity Sign Up page
 extension LoginViewController {

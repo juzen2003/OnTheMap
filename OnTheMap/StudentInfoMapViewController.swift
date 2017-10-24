@@ -91,6 +91,13 @@ class StudentInfoMapViewController: UIViewController {
             }
         }
     }
+    
+    
+    // go to AddLocationViewController
+    @objc func addLocation() {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
+        present(controller, animated: true, completion: nil)
+    }
 
 }
 
@@ -149,9 +156,7 @@ extension StudentInfoMapViewController: MKMapViewDelegate {
             
         }
      }
- 
-    
-    
+
 }
 
 
@@ -160,7 +165,7 @@ extension StudentInfoMapViewController {
     
     func configureUI() {
         // logout, refresh and add button
-        addNavigationBarButton(self, logoutAction: #selector(logout), refreshAction: #selector(downloadAndDisplayStudentInfo), addAction: nil)
+        addNavigationBarButton(self, logoutAction: #selector(logout), refreshAction: #selector(downloadAndDisplayStudentInfo), addAction: #selector(addLocation))
         self.activityIndicatorIsOn(false)
     }
     
