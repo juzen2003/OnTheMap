@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
             
         } else {
             
-            setUIEnabled(false)
+            self.setUIEnabled(false)
             self.debugTextLabel.text = "LOGIN IN PROCESS..."
             
             UdacityClient.sharedInstance().loginAndGetSessionID(username, password: password) { (success, sessionID, errorString) in

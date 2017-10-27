@@ -65,7 +65,7 @@ class StudentInfoMapViewController: UIViewController {
             if let results = results {
                 let annotations = self.createAnnotationArray(results)
                 performUIUpdatesOnMain {
-                     self.activityIndicatorIsOn(false)
+                    self.activityIndicatorIsOn(false)
                     self.mapView.addAnnotations(annotations)
                 }
             } else {
@@ -96,7 +96,9 @@ class StudentInfoMapViewController: UIViewController {
     // go to AddLocationViewController
     @objc func addLocation() {
         let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
-        present(controller, animated: true, completion: nil)
+        present(controller, animated: true) {
+            self.activityIndicatorIsOn(false)
+        }
     }
 
 }

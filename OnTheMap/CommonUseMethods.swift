@@ -22,7 +22,7 @@ func presentAlertView(_ alertMessages: String?, title: String, targetViewControl
     
     let alertVC = UIAlertController(title: title, message: alertString!, preferredStyle: .alert)
     let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
-        targetViewController.dismiss(animated: true, completion: nil)
+        alertVC.dismiss(animated: true, completion: nil)
     }
     
     alertVC.addAction(okAction)

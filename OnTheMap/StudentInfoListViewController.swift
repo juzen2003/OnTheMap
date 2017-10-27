@@ -61,8 +61,11 @@ class StudentInfoListViewController: UIViewController {
     
     // go to AddLocationViewController
     @objc func addLocation() {
+        self.activityIndicatorIsOn(true)
         let controller = storyboard!.instantiateViewController(withIdentifier: "AddLocationNavigationController") as! UINavigationController
-        present(controller, animated: true, completion: nil)
+        present(controller, animated: true) {
+            self.activityIndicatorIsOn(false)
+        }
     }
     
 }
